@@ -1,6 +1,6 @@
 # nn-explorer
 
-An interactive React application for visually designing and simulating neural network architectures.
+**NN Explorer** is an interactive tool for creating, visualizing, and simulating neural network architectures. It allows you to design models layer-by-layer, connect them visually, automatically calculate shape transformations, and export the architecture as ready-to-use PyTorch code. Ideal for quickly prototyping and understanding model structures without writing code manually.
 
 ## Features
 - [ ] **Drag-and-Drop**: Add layers from a palette to a central whiteboard.
