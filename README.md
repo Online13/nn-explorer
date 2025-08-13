@@ -1,4 +1,4 @@
-# Neural Network Builder
+# nn-explorer
 
 An interactive React application for visually designing and simulating neural network architectures.
 
