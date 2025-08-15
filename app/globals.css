@@ -161,13 +161,3 @@
 		@apply bg-background text-foreground;
 	}
 }
-
-.grid-bg {
-	/* opacity: 0.3; */
-	background-image: radial-gradient(
-		#5f5f5f62 1.4000000000000001px,
-		#ffffff 1.4000000000000001px
-	);
-  background-color: #f2f7fa;
-	background-size: 18px 18px;
-}

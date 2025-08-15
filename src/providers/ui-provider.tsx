@@ -14,7 +14,7 @@ interface UIDetails {
 
 interface UIState {
 	details: UIDetails | null;
-	showLayer: boolean;
+	showElementPanel: boolean;
 }
 
 interface UIContextState extends UIState {
@@ -26,7 +26,7 @@ const UIContext = createContext<UIContextState | undefined>(undefined);
 export function UIProvider({ children }: PropsWithChildren) {
 	const [state, setState] = useState<UIState>({
 		details: null,
-		showLayer: false,
+		showElementPanel: true,
 	});
 	const set = useCallback(
 		<K extends keyof UIState>(key: K, value: UIState[K]) => {

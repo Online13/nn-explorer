@@ -1,7 +1,7 @@
 import { Code, Download, RotateCcw, Upload } from "lucide-react";
 import { Button } from "../atoms/button";
 import { Card } from "../atoms/card";
-import { CodeDialog } from "../molecules/code-dialog";
+import { CodeSheet } from "../molecules/code-sheet";
 
 export function ActionBar() {
 	return (
@@ -14,7 +14,7 @@ export function ActionBar() {
 				<Download className="h-4 w-4 mr-2" />
 				Export
 			</Button>
-			<CodeDialog
+			<CodeSheet
 				trigger={
 					<Button variant="ghost" size="sm">
 						<Code className="h-4 w-4 mr-2" />
