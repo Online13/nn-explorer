@@ -1,7 +1,7 @@
 import { ComponentProps, useId } from "react";
 import { SearchIcon } from "lucide-react";
+import { Input } from "../atoms/input";
 
-import { Input } from "@/components/ui/input";
 
 type Props = ComponentProps<typeof Input>
 

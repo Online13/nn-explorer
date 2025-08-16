@@ -10,7 +10,7 @@ export function LeftPanel({ children }: PropsWithChildren) {
 		<div
 			className={cn(
 				"w-[380px] h-full flex flex-col p-4 pb-6 gap-2 transition-[width] duration-500",
-				data !== null && "w-[640px]"
+				data !== null && "w-[540px]"
 			)}
 		>
 			{children}

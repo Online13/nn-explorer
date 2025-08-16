@@ -31,8 +31,8 @@ export function ElementPanel() {
 					</ScrollArea>
 				</ElementPagerViewPage>
 				<ElementPagerViewPage
-					className="w-full h-full grow shrink-0 overflow-hidden"
 					page={1}
+					className="w-full h-full grow shrink-0 overflow-hidden"
 				>
 					<ScrollArea className="w-full shrink-0 h-full">
 						<ElementDetailSection />

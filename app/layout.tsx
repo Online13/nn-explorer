@@ -25,13 +25,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="w-full h-screen overflow-hidden">
-			<head>
+			{/* <head>
 				<script
 					async
 					crossOrigin="anonymous"
 					src="//unpkg.com/react-scan/dist/auto.global.js"
 				/>
-			</head>
+			</head> */}
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-screen overflow-hidden`}
 			>

@@ -1,9 +1,10 @@
 import { ArrowLeft } from "lucide-react";
-import { CardContent, CardHeader, CardTitle } from "../atoms/card";
+import { CardHeader, CardTitle } from "../atoms/card";
 import { useElementPage } from "./element-pager-view";
 import { useMemo } from "react";
 import { ELEMENTS } from "@/src/data/element";
 import { CONTENTS } from "@/src/data/content";
+import { InputDetailSection } from "./element-detail-section/input-detail-section";
 
 export function ElementDetailSection() {
 	const element = useElementPage();
@@ -34,6 +35,10 @@ export function ElementDetailSection() {
 			return null;
 		}
 		const id = item.id;
+		if (id === "io-input") {
+			return <InputDetailSection />;
+		}
+
 		if (id in CONTENTS) {
 			return CONTENTS[id];
 		}
@@ -46,9 +51,7 @@ export function ElementDetailSection() {
 				<ArrowLeft onClick={() => element.goBack()} />
 				{title}
 			</CardTitle>
-			<CardContent>
-				{content}
-			</CardContent>
+			{content}
 		</CardHeader>
 	);
 }
