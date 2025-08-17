@@ -1,5 +1,6 @@
+import { ElementData } from "../entities/element";
 
-export const ELEMENTS = [
+export const ELEMENTS: ElementData[] = [
     {
         key: "io",
         title: "Entrée/Sortie",

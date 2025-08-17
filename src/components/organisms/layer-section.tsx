@@ -9,13 +9,11 @@ import {
 } from "../atoms/accordion";
 import { LayerCard } from "../molecules/layer-card";
 import { SearchBar } from "../molecules/search-bar";
-// import { useNodeStore } from "@/src/providers/node-provider";
 import { useElementPage } from "./element-pager-view";
 import { ELEMENTS } from "@/src/data/element";
 
 export function LayerSection() {
 	const element = useElementPage();
-	// const addNode = useNodeStore((store) => store.addNode);
 	const [filter, setFilter] = useState("");
 	const filteredItems = useMemo(() => {
 		return ELEMENTS.filter((element) =>
@@ -56,11 +54,6 @@ export function LayerSection() {
 												element.setPage(1, {
 													id: subItem.id,
 												});
-												// addNode({
-												// 	id: Date.now().toString(),
-												// 	position: { x: 0, y: 0 },
-												// 	data: { label: subItem.title },
-												// });
 											}}
 										/>
 									))}

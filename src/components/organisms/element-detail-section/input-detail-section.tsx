@@ -7,50 +7,40 @@ import {
 	Text,
 	Video,
 } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Label } from "../../atoms/label";
-import { InputDetailTextForm } from "./input-detail/Input-detail-text-form";
-import { InputDetailImageForm } from "./input-detail/input-detail-image-form";
+import { DataTextForm } from "./data-detail/data-text-form";
 import { Separator } from "../../atoms/separator";
 import { Chip } from "../../atoms/chip";
+import { DataImageForm } from "./data-detail/data-image-form";
+import { DataType } from "@/src/data/data";
+import { InputData } from "@/src/entities/input";
+import { DataVideoForm } from "./data-detail/data-video-form";
 
-enum InputType {
-	Text = "text",
-	Image = "image",
-	Video = "video",
-	Audio = "audio",
-	Vector = "vector",
-	Mixte = "mixte",
-	Table = "table",
-}
-
-const INPUT_DATA: {
-	active: boolean;
-	id: InputType;
-	icon: ReactNode;
-	label: string;
-}[] = [
-	{ active: true, id: InputType.Text, icon: <Text />, label: "Text" },
-	{ active: true, id: InputType.Image, icon: <Img />, label: "Image" },
-	{ active: false, id: InputType.Video, icon: <Video />, label: "Video" },
-	{ active: false, id: InputType.Audio, icon: <AudioLines />, label: "Audio" },
+const INPUT_DATA: InputData[] = [
+	{ active: true, id: DataType.Text, icon: <Text />, label: "Text" },
+	{ active: true, id: DataType.Image, icon: <Img />, label: "Image" },
+	{ active: false, id: DataType.Video, icon: <Video />, label: "Video" },
+	{ active: false, id: DataType.Audio, icon: <AudioLines />, label: "Audio" },
 	{
 		active: false,
-		id: InputType.Vector,
+		id: DataType.Vector,
 		icon: <ArrowDownLeft />,
 		label: "Vector",
 	},
 	{
 		active: false,
-		id: InputType.Mixte,
+		id: DataType.Mixte,
 		icon: <Fullscreen />,
 		label: "Mixtes",
 	},
-	{ active: false, id: InputType.Table, icon: <Table />, label: "Table" },
+	{ active: false, id: DataType.Table, icon: <Table />, label: "Table" },
 ];
 
 export function InputDetailSection() {
-	const [selected, setSelected] = useState<InputType | undefined>(undefined);
+	const [selected, setSelected] = useState<DataType | undefined>(
+		DataType.Text
+	);
 
 	return (
 		<div className="w-full py-4 grid gap-2">
@@ -71,33 +61,29 @@ export function InputDetailSection() {
 			</div>
 			<Separator />
 			<div className="py-4">
-				{selected === InputType.Text && <InputDetailTextForm />}
-				{selected === InputType.Image && <InputDetailImageForm />}
-				{selected === InputType.Video && (
-					<div>
-						<p>Video input selected</p>
-					</div>
-				)}
-				{selected === InputType.Audio && (
+				{selected === DataType.Text ? (
+					<DataTextForm />
+				) : selected === DataType.Image ? (
+					<DataImageForm />
+				) : selected === DataType.Video ? (
+					<DataVideoForm />
+				) : selected === DataType.Audio ? (
 					<div>
 						<p>Audio input selected</p>
 					</div>
-				)}
-				{selected === InputType.Vector && (
+				) : selected === DataType.Vector ? (
 					<div>
 						<p>Vector input selected</p>
 					</div>
-				)}
-				{selected === InputType.Mixte && (
+				) : selected === DataType.Mixte ? (
 					<div>
 						<p>Mixtes input selected</p>
 					</div>
-				)}
-				{selected === InputType.Table && (
+				) : selected === DataType.Table ? (
 					<div>
 						<p>Table input selected</p>
 					</div>
-				)}
+				) : null}
 			</div>
 		</div>
 	);

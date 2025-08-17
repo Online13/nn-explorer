@@ -10,13 +10,20 @@ interface Props {
 	onClick: () => void;
 }
 
-export function Chip({ selected, onClick, icon, active=false, label }: Props) {
+export function Chip({
+	selected,
+	onClick,
+	icon,
+	active = false,
+	label,
+}: Props) {
 	return (
 		<Card
 			className={cn(
 				"py-0 cursor-pointer border-2",
 				selected && "border-2 text-primary border-primary",
-				!active && "border-2 border-muted text-muted",
+				!active &&
+					"border-2 border-muted text-muted-foreground/50 cursor-not-allowed"
 			)}
 			onClick={() => {
 				if (!active) {
@@ -27,7 +34,9 @@ export function Chip({ selected, onClick, icon, active=false, label }: Props) {
 			}}
 		>
 			<CardContent className="px-0 py-2 flex flex-row justify-center items-center gap-2">
-				<div className="">{icon}</div>
+				<div className={cn(!active && "text-muted-foreground/50")}>
+					{icon}
+				</div>
 				<div className="">
 					<h5 className="text-sm">{label}</h5>
 				</div>

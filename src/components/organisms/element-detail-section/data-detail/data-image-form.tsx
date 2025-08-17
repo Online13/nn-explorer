@@ -11,7 +11,7 @@ import {
 } from "../../../atoms/form";
 import { Input } from "../../../atoms/input";
 import { Button } from "../../../atoms/button";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useFormContext, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RadioGroup, RadioGroupItem } from "@/src/components/atoms/radio-group";
@@ -23,58 +23,34 @@ const CHANNEL_DATA: Record<string, string[]> = {
 	rgba: ["#ff0000e0", "#00ff00e0", "#0000ffe0", "#000000e0"],
 };
 
-const inputImageformSchema = z.object({
+const schema = z.object({
 	height: z.number().min(0),
 	width: z.number().min(0),
 	channel: z.string(),
 	order_dim: z.string(),
 });
 
-type InputImageFormValues = z.infer<typeof inputImageformSchema>;
+type Fields = z.infer<typeof schema>;
 
-export function InputDetailImageForm() {
-	const form = useForm<InputImageFormValues>({
-		defaultValues: {
-			height: 224,
-			width: 224,
-			channel: "rgb",
-			order_dim: "c,h,w",
-		},
-		resolver: zodResolver(inputImageformSchema),
+const defaultValues: Fields = {
+	height: 224,
+	width: 224,
+	channel: "rgb",
+	order_dim: "c,h,w",
+};
+
+export function DataImageForm() {
+	const form = useForm<Fields>({
+		defaultValues,
+		resolver: zodResolver(schema),
 	});
-	const channel = useWatch({ control: form.control, name: "channel" });
-	const width = useWatch({ control: form.control, name: "width" });
-	const height = useWatch({ control: form.control, name: "height" });
-
-	const rectSizes = useMemo(() => {
-		// keeping the ratio & normalized
-		return fitAndCenter(width, height);
-	}, [width, height]);
-	const onSubmit = (data: InputImageFormValues) => {
+	const onSubmit = (data: Fields) => {
 		console.log(data);
 	};
 
 	return (
 		<Form {...form}>
-			<div className="w-full h-[200px] mb-8 flex justify-center items-center bg-gray-100 rounded-md relative grid-bg">
-				{Array.from({
-					length: (CHANNEL_DATA[channel] || []).length,
-				}).map((_, index) => (
-					<div
-						key={index}
-						className="bg-gray-200 border-2 border-black transition-[width,height,top,left] rounded-md duration-600"
-						style={{
-							width: `${rectSizes.width}px`,
-							height: `${rectSizes.height}px`,
-							position: "absolute",
-							top: `${rectSizes.top + index * -8}px`,
-							left: `${rectSizes.left + index * 8}px`,
-							backgroundColor:
-								CHANNEL_DATA[channel]?.[index] || "transparent",
-						}}
-					/>
-				))}
-			</div>
+			<ImagePreview />
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="space-y-8 max-w-3xl"
@@ -206,11 +182,43 @@ export function InputDetailImageForm() {
 	);
 }
 
-function fitAndCenter(W: number, H: number, maxW = 475, maxH = 200) {
-	const scale = Math.min(maxW / W, maxH / H) * 0.7
-	const width = W * scale;
-	const height = H * scale;
-	const left = (maxW - width) / 2;
-	const top = (maxH - height) / 2;
-	return { width, height, left, top };
+function ImagePreview() {
+	const form = useFormContext<Fields>();
+	const channel = useWatch({ control: form.control, name: "channel" });
+	const width = useWatch({ control: form.control, name: "width" });
+	const height = useWatch({ control: form.control, name: "height" });
+
+	const rectSizes = useMemo(() => {
+		const maxWidth = 475;
+		const maxHeight = 200;
+		const scale = Math.min(maxWidth / width, maxHeight / height) * 0.7;
+		const scaledWidth = width * scale;
+		const scaledHeight = height * scale;
+		const left = (maxWidth - scaledWidth) / 2;
+		const top = (maxHeight - scaledHeight) / 2;
+		return { width: scaledWidth, height: scaledHeight, left, top };
+	}, [width, height]);
+
+	return (
+		<div className="w-full h-[200px] mb-8 flex justify-center items-center bg-gray-100 rounded-md relative grid-bg">
+			{Array.from({
+				length: (CHANNEL_DATA[channel] || []).length,
+			}).map((_, index) => (
+				<div
+					key={index}
+					className="bg-gray-200 border-2 border-black transition-[width,height,top,left] rounded-md duration-600"
+					style={{
+						width: `${rectSizes.width}px`,
+						height: `${rectSizes.height}px`,
+						position: "absolute",
+						top: `${rectSizes.top + index * -8}px`,
+						left: `${rectSizes.left + index * 8}px`,
+						backgroundColor:
+							CHANNEL_DATA[channel]?.[index] || "transparent",
+					}}
+				/>
+			))}
+		</div>
+	);
 }
+

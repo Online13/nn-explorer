@@ -20,19 +20,25 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const inputTextformSchema = z.object({
-	max_length: z.number().min(0),
-	format: z.string(),
+const schema = z.object({
 	lang: z.string().min(1),
+	max_length: z.number().min(0),
+	format: z.literal(["raw text", "tokens", "characters"]),
 });
 
-type InputTextFormValues = z.infer<typeof inputTextformSchema>;
+type Fields = z.infer<typeof schema>;
 
-export function InputDetailTextForm() {
-	const form = useForm<InputTextFormValues>({
-		resolver: zodResolver(inputTextformSchema),
+export function DataTextForm() {
+	const form = useForm<Fields>({
+		mode: "onSubmit",
+		resolver: zodResolver(schema),
+		defaultValues: {
+			max_length: 512,
+			format: "tokens",
+			lang: "en",
+		},
 	});
-	const onSubmit = (data: InputTextFormValues) => {
+	const onSubmit = (data: Fields) => {
 		console.log(data);
 	};
 
